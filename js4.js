@@ -1,12 +1,16 @@
 /*
 
 Write a CLL class that has the following methods:
-1) Add a node to the end of the list
-2) Delete a node from the end of the list
-3) Print the list
-4) Return the length of the list
-5) Search for a node in the list
-6) Exit
+> Add a node to the end of the list
+> Add a node to the beginning of the list
+> Add a node at a particular position in the list
+> Delete a node from the end of the list
+> Delete a node from the beginning of the list
+> Delete a node at a particular position in the list
+> Print the list
+> Return the length of the list
+> Search for a node in the list
+> Exit
 
 */
 
@@ -32,6 +36,71 @@ class CLL{
         this.last.next = new Node(data);
         this.last.next.next = temp;
         this.last = this.last.next;
+    }
+
+    add_at_start(data) {
+        if (this.last == null) {
+            this.last = new Node(data);
+            this.last.next = this.last;
+            return;
+        }
+        let temp = this.last.next;
+        this.last.next = new Node(data);
+        this.last.next.next = temp;
+    }
+
+
+    add_at_pos(data, pos) {
+        if (pos == 0) {
+            this.add(data);
+            return;
+        }
+        let temp = this.last.next;
+        let count = 0;
+        while (count < pos - 1) {
+            temp = temp.next;
+            count++;
+        }
+        let new_node = new Node(data);
+        new_node.next = temp.next;
+        temp.next = new_node;
+    }
+
+    delete_at_pos(pos) {
+        if (pos == 0) {
+            this.last.next = this.last.next.next;
+            return;
+        }
+        let temp = this.last.next;
+        let count = 0;
+        while (count < pos - 1) {
+            temp = temp.next;
+            count++;
+        }
+        temp.next = temp.next.next;
+    }
+
+    delete_last() {
+        if (this.last == null) {
+            console.log("List is empty");
+            return;
+        }
+        if (this.last == this.last.next) {
+            this.last = null;
+            return;
+        }
+        let curr = this.last;
+        do {
+            curr = curr.next;
+        } while (curr.next != this.last);
+        curr.next = this.last.next;
+        this.last = curr;
+    }
+
+
+
+    delete_first() {
+        this.last.next = this.last.next.next;
     }
 
     print() {
